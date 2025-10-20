@@ -1,0 +1,51 @@
+public Class LaberintoBinario {
+
+    /*
+     * Funcion recursiva para busacr un camino en el laberinto binario
+     */
+    public static boolean hayCamino(int[][] laberinto, int x, int y, boolean[][] visitado) {
+        int n = laberinto.length;
+
+        //1.Validaciones de limites y obstaculos
+        if(x < 0 || y < 0 || x >= n || laberinto[x][y] == 0 || visitado[x][y]) {
+            return false;
+        }
+
+        //2. Caso existoso: Completo el laberinto  
+        if(x == n - 1 && y == n - 1) {
+            return true;
+        }
+
+        //3. Marcar posición como visitada
+        visitado[x][y] = true;
+
+        //4. Probar en las 4 direcciones que haya camino
+        boolean Camino = 
+                    hayCamino(laberinto, x + 1, y, visitado) || // Abajo
+                    hayCamino(laberinto, x - 1, y, visitado) || // Arriba
+                    hayCamino(laberinto, x, y + 1, visitado) || // Derecha
+                    hayCamino(laberinto, x, y - 1, visitado);   // Izquierda
+            return Camino;
+    }
+
+        public static void main(String[] args) {
+        int[][] laberinto = {
+            {1, 0, 1, 1, 1},
+            {1, 1, 1, 0, 1},
+            {0, 1, 0, 1, 0},
+            {1, 1, 1, 1, 1},
+            {0, 0, 1, 0, 1}
+        };
+        boolean[][] visitado = new boolean[laberinto.length][laberinto.length];
+
+        try {
+            if(hayCamino(laberinto, 0, 0, visitado)) {
+                System.out.println("Camino Encontrado desde (0,0) hasta ("+(laberinto.length -1)+","+(laberinto.length -1)+")");
+            } else {
+                System.out.println("No hay un camino posible en el laberinto.");
+            }
+        }
+        } catch (ArrayIndexOutOfBoundsException e) {
+            System.out.println("Error: Posición fuera de rango.");
+    }
+}
