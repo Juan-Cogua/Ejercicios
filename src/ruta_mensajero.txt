@@ -1,0 +1,49 @@
+Ejecución: 2025-10-22 09:20:06
+RUTA: (0,0) -> (1,0) -> (1,1) -> (1,2) -> (1,3) -> (2,3) -> (3,3) -> (4,3) -> (4,4)
+Tiempo estimado (min): 40
+Entrega estimada: 2025-10-22 10:00:06
+
+Ejecución: 2025-10-22 09:20:28
+RUTA: (0,0) -> (0,1) -> (0,2) -> (1,2) -> (2,2) -> (2,3) -> (3,3) -> (4,3) -> (4,4)
+Tiempo estimado (min): 40
+Entrega estimada: 2025-10-22 10:00:28
+
+Ejecución: 2025-10-22 09:24:06
+SIN RUTA
+
+Ejecución: 2025-10-22 09:24:24
+SIN RUTA
+
+Ejecución: 2025-10-22 09:24:32
+SIN RUTA
+
+Ejecución: 2025-10-22 09:24:40
+SIN RUTA
+
+Ejecución: 2025-10-22 09:24:49
+RUTA: (0,0) -> (0,1) -> (0,2) -> (1,2) -> (2,2) -> (3,2) -> (3,3) -> (4,3) -> (4,4)
+Tiempo estimado (min): 40
+Entrega estimada: 2025-10-22 10:04:49
+
+Ejecución: 2025-10-22 09:30:57
+SIN RUTA
+
+Ejecución: 2025-10-22 09:32:25
+SIN RUTA
+
+Ejecución: 2025-10-22 09:33:47
+SIN RUTA
+
+Ejecución: 2025-10-22 09:34:07
+SIN RUTA
+
+Ejecución: 2025-10-22 09:34:33
+RUTA: (0,0) -> (0,1) -> (1,1) -> (1,2) -> (2,2) -> (3,2) -> (3,3)
+Tiempo estimado (min): 30
+Entrega estimada: 2025-10-22 10:04:33
+
+Ejecución: 2025-10-22 09:35:37
+RUTA: (0,0) -> (1,0) -> (2,0) -> (3,0) -> (3,1) -> (2,1) -> (1,1) -> (1,2) -> (2,2) -> (3,2) -> (3,3)
+Tiempo estimado (min): 50
+Entrega estimada: 2025-10-22 10:25:37
+
