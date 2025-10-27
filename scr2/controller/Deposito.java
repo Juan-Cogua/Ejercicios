@@ -25,6 +25,18 @@ public class Deposito {
     public String getNombre() {
         return nombre;
     }
+    
+    public ProductoBase getProducto(int fila, int columna) {
+        return productos[fila][columna];
+    }
+
+    public int getFilas() {
+        return productos.length;
+    }
+    
+    public int getColumnas() {
+        return productos[0].length;
+    }
 
     public void colocarProducto(int fila, int columna, ProductoBase producto) throws UbicacionInvalidaException, CantidadNegativaException {
         validarUbicacion(fila, columna);
@@ -76,29 +88,34 @@ public class Deposito {
     }
 
     // Muestra el contenido del depósito con índices de fila/columna empezando en 1
-    public void mostrarContenido() {
-        System.out.println("Contenido del depósito " + nombre + ":");
-        if (productos == null || productos.length == 0) {
-            System.out.println("(vacío)");
-            return;
-        }
-        // Imprimir encabezado de columnas
-        System.out.print("     ");
-        for (int j = 0; j < productos[0].length; j++) {
-            System.out.printf("  C%-3d", j + 1);
+public void mostrarContenido() {
+    System.out.println("Contenido del depósito " + nombre + ":");
+    if (productos == null || productos.length == 0) {
+        System.out.println("(vacío)");
+        return;
+    }
+    // Imprimir encabezado de columnas
+    System.out.print("     ");
+    for (int j = 0; j < productos[0].length; j++) {
+        System.out.printf("  C%-3d", j + 1);
+    }
+    System.out.println();
+
+    for (int i = 0; i < productos.length; i++) {
+        System.out.printf("F%-3d", i + 1);
+        System.out.print(" ");
+        for (int j = 0; j < productos[i].length; j++) {
+            String s;
+            if (productos[i][j] == null) {
+                s = "Vacío";
+            } else {
+                String tipo = (productos[i][j] instanceof scr2.model.ProductoNacional) ? "N" : "I";
+                s = String.format("%s(%d,%s)", productos[i][j].getNombre(), productos[i][j].getCantidad(), tipo);
+            }
+            System.out.print(String.format("[%s] ", s));
         }
         System.out.println();
-
-        for (int i = 0; i < productos.length; i++) {
-            System.out.printf("F%-3d", i + 1);
-            System.out.print(" ");
-            for (int j = 0; j < productos[i].length; j++) {
-                String s;
-                if (productos[i][j] == null) s = "Vacío";
-                else s = String.format("%s(%d)", productos[i][j].getNombre(), productos[i][j].getCantidad());
-                System.out.print(String.format("[%s] ", s));
-            }
-            System.out.println();
-        }
     }
+    
+}
 }

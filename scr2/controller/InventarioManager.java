@@ -49,31 +49,76 @@ public class InventarioManager {
         return d.stockTotal();
     }
 
-    // Genera alertas de ubicaciones vacías y las escribe en un TXT con encabezado descriptivo.
     public List<String> generarAlertasTxt(String rutaTxt) throws ArchivoCreacionException {
         List<String> todasVacias = new ArrayList<>();
         try (PrintWriter pw = new PrintWriter(new FileWriter(rutaTxt, false))) {
             pw.println("Alertas de ubicaciones vacías");
             pw.println("Formato: Deposito, Fila(1-base), Columna(1-base)");
             pw.println("-------------------------------");
-
-            List<String> v;
-
-            v = depositoA.detectarUbicacionesVacias();
-            for (String linea : v) { pw.println(linea); todasVacias.add(linea); }
-
-            v = depositoB.detectarUbicacionesVacias();
-            for (String linea : v) { pw.println(linea); todasVacias.add(linea); }
-
-            v = depositoC.detectarUbicacionesVacias();
-            for (String linea : v) { pw.println(linea); todasVacias.add(linea); }
-
+    
+            Deposito[] depositos = {depositoA, depositoB, depositoC};
+    
+            for (Deposito deposito : depositos) {
+                pw.println("Depósito: " + deposito.getNombre());
+                int filas = deposito.getFilas();
+                int columnas = deposito.getColumnas();
+                int anchoCelda = 12; // Ancho fijo para cada celda
+    
+                for (int i = 0; i < filas; i++) {
+                    for (int j = 0; j < columnas; j++) {
+                        if (deposito.getProducto(i, j) != null) {
+                            pw.print(String.format("%-" + anchoCelda + "s", "P")); // Producto
+                        } else {
+                            String ubicacion = String.format("%s,%d,%d", deposito.getNombre(), i + 1, j + 1);
+                            pw.print(String.format("%-" + anchoCelda + "s", ubicacion)); // Ubicación vacía
+                            todasVacias.add(ubicacion);
+                        }
+                        if (j < columnas - 1) pw.print("| ");
+                    }
+                    pw.println(); // Nueva línea al final de cada fila
+                }
+                pw.println(); // Espacio entre depósitos
+            }
         } catch (IOException e) {
             throw new ArchivoCreacionException("No se puede crear/escribir el archivo: " + e.getMessage());
         }
         return todasVacias;
     }
 
+    // Genera alertas de ubicaciones vacías y las escribe en un TXT con formato alineado.
+    public List<String> generarAlertasTxtPorDeposito(String rutaTxt, String depositoCodigo) throws ArchivoCreacionException {
+        Deposito deposito = seleccionarDeposito(depositoCodigo);
+        if (deposito == null) throw new IllegalArgumentException("Depósito desconocido: " + depositoCodigo);
+    
+        List<String> vacias = new ArrayList<>();
+        try (PrintWriter pw = new PrintWriter(new FileWriter(rutaTxt, false))) {
+            pw.println("Alertas de ubicaciones vacías");
+            pw.println("Formato: Deposito, Fila(1-base), Columna(1-base)");
+            pw.println("-------------------------------");
+            pw.println("Depósito: " + deposito.getNombre());
+    
+            int filas = deposito.getFilas();
+            int columnas = deposito.getColumnas();
+            int anchoCelda = 12; // Ancho fijo para cada celda
+    
+            for (int i = 0; i < filas; i++) {
+                for (int j = 0; j < columnas; j++) {
+                    if (deposito.getProducto(i, j) != null) {
+                        pw.print(String.format("%-" + anchoCelda + "s", "P")); // Producto
+                    } else {
+                        String ubicacion = String.format("%s,%d,%d", deposito.getNombre(), i + 1, j + 1);
+                        pw.print(String.format("%-" + anchoCelda + "s", ubicacion)); // Ubicación vacía
+                        vacias.add(ubicacion);
+                    }
+                    if (j < columnas - 1) pw.print("| "); // Separador entre columnas
+                }
+                pw.println(); // Nueva línea al final de cada fila
+            }
+        } catch (IOException e) {
+            throw new ArchivoCreacionException("No se puede crear/escribir el archivo: " + e.getMessage());
+        }
+        return vacias;
+    } 
     public void mostrarDeposito(String codigo) {
         Deposito d = seleccionarDeposito(codigo);
         if (d == null) {
